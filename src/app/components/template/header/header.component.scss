@@ -1,0 +1,40 @@
+@import './../../../../assets/scss/colors.scss';
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.header .btnMenu {
+    background: $purple-light;
+    color: white;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    margin-top: 3em;
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header .logo {
+    display: flex;
+    margin-top: 3em;
+    max-height: 5em;
+}
+
+.header .title-group {
+    display: flex;
+    margin-top: 6em;
+    padding-left: 25px;
+    left: 50%;
+    right: 50%;
+    position: absolute;
+}
+
+.header .title-group mat-icon{
+    padding-right: 5px;
+}

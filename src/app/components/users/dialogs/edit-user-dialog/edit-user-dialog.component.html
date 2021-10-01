@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="add-title">
+      <h2 class="primary">
+          <mat-icon>{{ (isPerfil ? "account_circle" : !loggedUserIsAdmin ? "visibility" : isNew ? "add" : "edit") }}</mat-icon>
+          {{ (isPerfil ? "Perfil de Usuário" : !loggedUserIsAdmin ? "Detalhes do Usuário" : isNew ? "Novo Usuário" : "Edição de Usuário") }}
+        </h2>
+    </div>
+    <div>
+      <form [formGroup]="addCusForm" #form="ngForm" (ngSubmit) ="saveUser()" (change)="formChanged()">
+        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Nome" value={{user.name}} formControlName="name" required>
+                <mat-error *ngIf="addCusForm.controls.name.hasError('required')">
+                  Por favor informe um nome válido
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.name.hasError('pattern')">
+                    Por favor informe um nome válido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Sobrenome" value={{user.lastName}} formControlName="lastName" required>
+                <mat-error *ngIf="addCusForm.controls.lastName.hasError('required')">
+                  Por favor informe um sobrenome válido
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.lastName.hasError('pattern')">
+                    Por favor informe um sobrenome válido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Papel</mat-label>
+                <mat-select value={{user.role}} required formControlName="role" formControlName="role">
+                  <mat-option *ngFor="let role of roles" [value]="role.value" [disabled]="role.disabled">
+                    {{role.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addCusForm.controls.role.hasError('required')">
+                  Por favor informe um papel válido
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.role.hasError('pattern')">
+                    Por favor informe um papel válido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email" value={{user.email}} formControlName="email" required>
+                <mat-error *ngIf="addCusForm.controls.email.hasError('required')">
+                    Por favor informe um email válido
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.email.hasError('pattern')">
+                    Por favor informe um email válido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput type="password" placeholder="Senha" value={{user.password}} formControlName="password" required>
+                <mat-error *ngIf="addCusForm.controls.password.hasError('required')">
+                    Por favor informe um senha válido
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.password.hasError('pattern')">
+                    Por favor informe um senha válido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+  
+        <div class="btn-sec">
+            <button mat-raised-button type="button" class="Discard-btn" (click)="cancel()">Cancelar</button>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="(!loggedUserIsAdmin && !isNew && !isPerfil)">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>

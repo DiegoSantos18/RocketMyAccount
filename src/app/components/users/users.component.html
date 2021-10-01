@@ -1,0 +1,12 @@
+<div class="container">
+    <button mat-raised-button (click)="addUser()" class="btnAddUser" *ngIf="loggedUserIsAdmin">
+        <mat-icon>add</mat-icon> Novo Usuário
+    </button>
+
+    <button mat-raised-button (click)="editUser()" class="btnAddUser">
+        <mat-icon>edit</mat-icon> Edit só pra testar vai na listagem depois
+    </button>
+    
+    <br><br>Listagem aqui
+    <!-- <app-users-list></app-users-list> -->
+</div>

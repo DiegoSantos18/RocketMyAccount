@@ -1,0 +1,52 @@
+<mat-toolbar color="primary" ><img src="./../../../assets/img/RocketMyAccountLogo.png" style="height: 50%;"></mat-toolbar>
+
+<div class="card-container">
+    <mat-card  class="card-content">    
+        <!-- <form  (ngSubmit)="onSubmit(user.username,user.password)" #myForm="ngForm" class="form-elements"> -->
+        <form  class="form-elements" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            
+            <mat-icon class="user-icon">account_circle</mat-icon>
+            
+            <h3 style="margin-top: 20%;">LOGIN</h3>
+
+            <div class="form-group" style="width: 100%;">
+                <mat-form-field class="form-row" appearance="outline" style="width: 100%;">
+                    <input matTooltip="Seu email" matInput placeholder="usuário" required
+                        id="username" name="username" formControlName="username"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && field.username.errors }" >
+                </mat-form-field>
+                <div *ngIf="submitted && field.username.errors" class="invalid-feedback">
+                    <div *ngIf="field.username.errors.required">Obrigatório informar um usuário!</div>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 100%;">
+                <mat-form-field class="form-row" appearance="outline" style="width: 100%;">
+                    <input matTooltip="Sua senha" matInput placeholder="senha" required
+                        id="password" name="gpassword" [type]="hidePwd ? 'password' : 'text'"
+                        formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && field.password.errors }">
+                    <button mat-icon-button matSuffix type="button" (click)="hidePwd = !hidePwd" [attr.aria-label]="'Ocultar Senha'" [attr.aria-pressed]="hidePwd">
+                        <mat-icon class="hidePwdIcon" matTooltip="{{(hidePwd ? 'Clique para mostrar a senha' : 'Clique para ocultar a senha')}}">{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div *ngIf="submitted && field.password.errors" class="invalid-feedback">
+                    <div *ngIf="field.password.errors.required">Obrigatório informar uma senha!</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button mat-raised-button color="primary" mat-raised-button style="border-radius:15px;max-height:6vh;" [disabled]="loading">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>
+                    <img src="./../../../assets/img/GitHub.png"><a style="color: white;" href="https://github.com/DiegoSantos18/AppolusProject" target="_blank">By - Diego Santos</a>
+                </p>
+            </div>
+        </form>
+    </mat-card>
+</div>

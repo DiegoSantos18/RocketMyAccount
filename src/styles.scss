@@ -1,1 +1,34 @@
+@import './assets/scss/colors.scss';
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-icon {
+    vertical-align: middle;
+}
+
+a {
+ text-decoration: none;
+ color: white;    
+}
+
+
+//Notificações
+.error-snackbar{
+    background-color: $red;
+    color: white;
+    font-weight: bold;
+}
+
+.success-snackbar{
+    background-color: $green;
+    color: white;
+    font-weight: bold;
+}
+
+.alert-snackbar{
+    background-color: $yellow;
+    color: white;
+    font-weight: bold;
+}
