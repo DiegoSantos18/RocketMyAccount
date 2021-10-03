@@ -2,8 +2,7 @@
 
 <div class="card-container">
     <mat-card  class="card-content">    
-        <!-- <form  (ngSubmit)="onSubmit(user.username,user.password)" #myForm="ngForm" class="form-elements"> -->
-        <form  class="form-elements" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form  class="form-elements" [formGroup]="loginForm" (ngSubmit)="login()">
             
             <mat-icon class="user-icon">account_circle</mat-icon>
             

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../shared/services/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  get isLogged() { 
+    return this.authService.loggedUserHasAuthorized; 
+  }
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
-
 }

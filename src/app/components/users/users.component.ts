@@ -19,8 +19,7 @@ export class UsersComponent implements OnInit {
     private dialogRef: MatDialog,
     private authService: AuthService
   ) { 
-    //É o administrador logado?
-    this.loggedUserIsAdmin = this.authService.isAdmin();
+    this.loggedUserIsAdmin = this.authService.isAdmin;
   }
 
   ngOnInit(): void {
@@ -31,15 +30,6 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(user?: User){
-    //Teste editar capar fora depois
-    user = new User();
-    user.id = 1;
-    user.name = "teste";
-    user.lastName = "teste";
-    user.role = Role.ADMIN;
-    user.email ="teste@teste.com";
-    user.password = "123456";
-
     this.openEditUserDialog(user);
   }
 

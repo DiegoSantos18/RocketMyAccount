@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from '../../users/dialogs/edit-user-dialog/edit-user-dialog.component';
-import { User } from './../../../shared/models/user';
+import { AuthorizationUser } from './../../../shared/models/user';
 
 @Component({
   selector: 'app-nav',
@@ -14,15 +14,14 @@ import { User } from './../../../shared/models/user';
 export class NavComponent implements OnInit {
   @ViewChild('sidenav' , {static: true})
   public sidenav!: MatSidenav;
-  public userLogged!: User;
+  public userLogged!: AuthorizationUser;
 
   constructor(
     private dialogRef: MatDialog,
     private sidenavService: NavService, 
     private authService: AuthService
   ) { 
-    //Usuário logado
-    this.userLogged = this.authService.getLoggedUser();
+    this.userLogged = this.authService.loggedUser;
   }
 
   ngOnInit(): void {
@@ -46,7 +45,7 @@ export class NavComponent implements OnInit {
     this.dialogRef.open(EditUserDialogComponent, {
       height: '400px',
       width: '600px',
-      data: { isPerfil: true, user: this.userLogged }
+      data: { isPerfil: true, user: undefined }
     }).afterClosed().subscribe(x => {
       this.sidenavToggle();//Quando eu fecho modal me abre menu novamente Toggle
     });

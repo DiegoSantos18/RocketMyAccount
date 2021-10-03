@@ -1,4 +1,3 @@
-import { Role } from './../../models/user';
 import { AuthService } from './../../services/auth-service/auth.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
@@ -11,10 +10,10 @@ export class ElevationGuard implements CanActivate {
   constructor(private authService: AuthService){}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    const userLogged = this.authService.getLoggedUser();
+    const loggedUserAuthorized = this.authService.loggedUserHasAuthorized;
 
     //Se Admin autorizado
-    if(userLogged && userLogged.role == Role.ADMIN){
+    if(loggedUserAuthorized && this.authService.isAdmin){
       return true;
     }
 

@@ -1,3 +1,6 @@
+import { EditUserDialogComponent } from './components/users/dialogs/edit-user-dialog/edit-user-dialog.component';
+import { LayoutComponent } from './components/template/layout/layout.component';
+import { LoginComponent } from './components/login/login.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +19,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { fakeBackendProvider } from './shared/utils/fake-backend';
 import { ErrorInterceptor } from './shared/utils/interceptors/error.interceptor';
 import { JwtInterceptor } from './shared/utils/interceptors/jwt.interceptor';
+import { ProfileDialogComponent } from './components/users/dialogs/profile-dialog/profile-dialog/profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { JwtInterceptor } from './shared/utils/interceptors/jwt.interceptor';
     HeaderComponent,
     FooterComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileDialogComponent,
+    LoginComponent,
+    LayoutComponent,
+    EditUserDialogComponent
   ],
   imports: [
     BrowserModule,

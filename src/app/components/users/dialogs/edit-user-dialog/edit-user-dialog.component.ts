@@ -1,7 +1,7 @@
 import { AuthService } from './../../../../shared/services/auth-service/auth.service';
 import { NotificationService } from './../../../../shared/services/notification-service/notification.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { Role, User } from './../../../../shared/models/user';
+import { Role, User, AuthorizationUser } from './../../../../shared/models/user';
 import { ApiService } from './../../../../shared/services/api-service/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ interface SelectRole {
 export class EditUserDialogComponent implements OnInit {
   public isNew: boolean;
   public loggedUserIsAdmin: boolean = false;
-  public loggedUser!: User;
+  public loggedUser!: AuthorizationUser;
   public isPerfil: boolean = false;
   public user!: User;
   @ViewChild("form", { static: true })
@@ -43,45 +43,41 @@ export class EditUserDialogComponent implements OnInit {
     private apiService: ApiService,
     private authService: AuthService) 
   { 
-    //É o administrador logado?
-    this.loggedUserIsAdmin = this.authService.isAdmin();
+    this.loggedUserIsAdmin = this.authService.isAdmin;
+    this.loggedUser = this.authService.loggedUser;
 
     if (data) {
       this.isPerfil = data["isPerfil"];
       this.user = data["user"];
     }
 
-    /*Só chamo se não é perfil, senão já vem quando abre o componente
-    * Não precisa chamar denovo
-    */
-    if(!this.isPerfil){
-      this.loggedUser = this.authService.getLoggedUser();
-    }
-
     if (this.user) {
       this.isNew = false;
     } else {
       this.isNew = true;
-      this.user = new User();
     }
   }
 
   ngOnInit(): void {
-      //#region Form Control - inicia o que precisar e carrega o form
-      this.addCusForm = this.fb.group({
-        id: new FormControl({ value: (this.user ? this.user.id : null)}),
-        name: new FormControl({ value: (this.user ? this.user.name : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
-        lastName: new FormControl({ value: (this.user ? this.user.lastName : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
-        role: new FormControl({ value: (this.user ? this.user.role : null), disabled: !this.canEditRole() }, [Validators.required]),
-        email: new FormControl({ value: (this.user ? this.user.email : null), disabled: !this.canEditField() }, [Validators.required, Validators.email]),
-        password: new FormControl({ value: (this.user ? this.user.password : null), disabled: !this.canEditField(true) }, [Validators.required]),
-        token: new FormControl({ value: (this.user ? this.user.token : null)})
-      });
-      this.breakpoint = window.innerWidth <= 600 ? 1 : 2; // Breakpoint observer code
-      //#endregion
+    //#region Form Control - inicia o que precisar e carrega o form
+    this.addCusForm = this.fb.group({
+      id: new FormControl({ value: (this.user ? this.user.id : null)}),
+      name: new FormControl({ value: (this.user ? this.user.name : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
+      lastName: new FormControl({ value: (this.user ? this.user.lastName : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
+      role: new FormControl({ value: (this.user ? this.user.role : null), disabled: !this.canEditRole() }, [Validators.required]),
+      email: new FormControl({ value: (this.user ? this.user.email : null), disabled: !this.canEditField() }, [Validators.required, Validators.email]),
+      password: new FormControl({ value: (this.user ? this.user.password : null), disabled: !this.canEditField(true) }, [Validators.required]),
+      token: new FormControl({ value: (this.user ? this.user.token : null)})
+    });
+    this.breakpoint = window.innerWidth <= 600 ? 1 : 2; // Breakpoint observer code
+    //#endregion
   }
 
- canEditField(isPassword: boolean = false): boolean{
+  // loadUserPerfil(): User {
+  //   this.apiService.getUserById(this.loggedUser.id).subscribe(u => {return u;});
+  // }
+
+  canEditField(isPassword: boolean = false): boolean{
     //Admin, perfil com senha, e novo usuário não perfil libera campo edição
     if(this.loggedUserIsAdmin || 
       (this.isPerfil && isPassword) ||

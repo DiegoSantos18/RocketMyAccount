@@ -28,7 +28,12 @@ export class ApiService {
   }
 
   //Get usuário by Id
-  getUserById(id: string): Observable<User> {
+  getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${environment.apiUrl}${ApiEntityType.Users}/${id}`);
+  }
+
+   //Get Logged User
+   getLoggedUserByAuthentication(email: string, password: string): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}${ApiEntityType.Users}?email=${email}&password=${password}&_limit=1`);
   }
 }
