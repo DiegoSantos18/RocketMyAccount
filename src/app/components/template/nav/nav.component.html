@@ -10,7 +10,7 @@
             <a mat-list-item (click)="logout()"><mat-icon>logout</mat-icon> Sair</a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="content">
+    <mat-sidenav-content class="content" (click)="sidenavClose()">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

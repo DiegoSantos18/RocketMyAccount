@@ -1,6 +1,59 @@
 @import './../../../assets/scss/colors.scss';
 
 .btnAddUser {
-    color: white;
+    color: $white;
     background-color: $green;
+
+    &.btn-circle {
+        margin: 5px;
+        padding: 5px;
+        border-radius: 30px;
+    }
 }
+
+.busca {
+    right: 0; 
+    margin-left: 118em; 
+    padding: 5px;
+    display: flex;
+}
+
+
+table {
+    background-color: $purple-light2;
+    width: 98%;
+    table-layout: fixed;
+    margin-top: 20px;
+    opacity: .9;
+}
+  
+th, td {
+overflow: hidden;
+width: 200px;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+mat-paginator {
+    background-color: $purple-light2;
+    width: 98%;
+    table-layout: fixed;
+    opacity: .9;
+}
+
+::ng-deep .mat-select-panel {
+    background-color: $purple-light2 !important;
+}
+
+.btnView {
+    color: $blue-light;
+}
+
+.btnEdit {
+    color: $yellow;
+}
+
+.btnDelete {
+    color: $red;
+}
+

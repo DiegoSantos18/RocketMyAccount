@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class LayoutComponent implements OnInit {
 
   get isLogged() { 
-    return this.authService.loggedUserHasAuthorized; 
+    return this.authService.loggedUser; 
   }
 
   constructor(private authService: AuthService) { }

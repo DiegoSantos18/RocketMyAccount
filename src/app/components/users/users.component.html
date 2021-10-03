@@ -1,12 +1,60 @@
 <div class="container">
-    <button mat-raised-button (click)="addUser()" class="btnAddUser" *ngIf="loggedUserIsAdmin">
-        <mat-icon>add</mat-icon> Novo Usuário
-    </button>
-
-    <button mat-raised-button (click)="editUser()" class="btnAddUser">
-        <mat-icon>edit</mat-icon> Edit só pra testar vai na listagem depois
-    </button>
+    <div>
+        <button mat-raised-button (click)="addUser()" class="btnAddUser btn-circle" *ngIf="loggedUserIsAdmin">
+            <mat-icon>add</mat-icon> Novo Usuário
+        </button>
     
-    <br><br>Listagem aqui
-    <!-- <app-users-list></app-users-list> -->
+        <span class="busca">
+            <mat-form-field appearance="outline">
+                <input #filtro matInput type="search" placeholder="Filtro" (keyup)="applyFilter(filtro.value)">
+                <mat-icon mat-icon-button matSuffix class="busca-icon">search</mat-icon>
+            </mat-form-field>
+        </span>
+        
+        <!-- Tabela -->
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <!-- Last Name Column -->
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Sobrenome</th>
+                <td mat-cell *matCellDef="let element">
+                {{ element.lastName }}
+                </td>
+            </ng-container>
+
+            <!-- Role Column -->
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Papel</th>
+                <td mat-cell *matCellDef="let element">
+                {{ (element.role == 0 ? 'Admin' : 'Comum') }}
+                </td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let element">
+                {{ element.email }}
+                </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Ações</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [ngClass]="loggedUserIsAdmin ? 'btnEdit' : 'btnView'" (click)="editUser(element)"><mat-icon>{{ (loggedUserIsAdmin ? 'edit' : 'visibility') }}</mat-icon></button>
+                    <button *ngIf="loggedUserIsAdmin" mat-icon-button (click)="deleteUser(element.id)" class="btnDelete"><mat-icon>delete</mat-icon></button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+    </div>
 </div>

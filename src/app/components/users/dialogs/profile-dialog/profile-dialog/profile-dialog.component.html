@@ -1,1 +1,40 @@
-<p>profile-dialog works!</p>
+<div class="container">
+    <div class="add-title">
+        <h2 class="primary">
+          <mat-icon>account_circle</mat-icon> Perfil de Usuário
+        </h2>
+    </div>
+
+    <div>
+        <div class="container-image-user">
+            <img [src]="(loggedUser?.role == 0 ? './../../../../assets/img/adminImg.png' : './../../../../assets/img/userImg.png')">
+            <div class="user-infos">
+                <p>Nome: {{ (user?.name + ' ' + user?.lastName) }}</p>
+                <p>Papel: {{ (user?.role == 0 ? "Administrador": "Comum" ) }}</p>
+                <p>Email: {{ user?.email }}</p>
+
+                <button mat-raised-button class="btnChangePwd" (click)="(changePassword = !changePassword)" matTooltip="Clique para opções de edição de senha">
+                    <mat-icon>
+                        {{ (!changePassword ? 'lock' : 'lock_open') }}
+                    </mat-icon>
+                </button>
+
+                <div *ngIf="changePassword" style="margin-top: 1%;">
+                    <mat-form-field appearance="fill">
+                        <input matInput placeholder="Nova Senha" [(ngModel)]="newPassword" required type="password">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <input matInput placeholder="Confirmação Nova Senha" [(ngModel)]="confirmNewPassword" required type="password">
+                    </mat-form-field>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="btn-sec">
+            <button mat-raised-button type="button" class="Discard-btn" (click)="cancel()">Fechar</button>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="saveProfile()" *ngIf="changePassword">Salvar</button>
+        </div>
+    </div>
+  </div>

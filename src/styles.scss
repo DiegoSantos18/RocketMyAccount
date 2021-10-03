@@ -10,25 +10,25 @@ mat-icon {
 
 a {
  text-decoration: none;
- color: white;    
+ color: $white;    
 }
 
 
 //Notificações
 .error-snackbar{
     background-color: $red;
-    color: white;
+    color: $white;
     font-weight: bold;
 }
 
 .success-snackbar{
     background-color: $green;
-    color: white;
+    color: $white;
     font-weight: bold;
 }
 
 .alert-snackbar{
     background-color: $yellow;
-    color: white;
+    color: $white;
     font-weight: bold;
 }

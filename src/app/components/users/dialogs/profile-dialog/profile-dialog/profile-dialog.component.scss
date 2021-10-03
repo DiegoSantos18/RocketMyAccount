@@ -1,0 +1,68 @@
+@import './../../../../../../assets/scss/colors.scss';
+
+::ng-deep .mat-dialog-container {
+    overflow: auto !important;
+    background-color: $purple-light2;
+  }
+  
+.container {
+    mat-form-field {
+        width: 90%;
+    }
+
+    .btnChangePwd {
+        border-radius: 100%;
+        width: 4em;
+        height: 4em;
+        background-color: $purple2;
+        color: white;
+    }
+    
+    .container-image-user {
+        display: flex !important;
+    }
+    
+    .container-image-user img{
+        width: 20%;
+        height: 20%;
+        position: relative;
+        display: flex;
+    }
+    
+    .container-image-user .user-infos {
+        font-size: 12pt;
+        font-weight: bold;
+        text-align: left;
+        color: $white;
+        margin-left: 2%;
+        width: 46vh;
+    }
+
+    .btn-sec {
+        float: right;
+        text-align: right;
+        margin-top: 8.5em;
+    }
+    .Update-btn {
+        margin: 5px;
+    }
+    .Discard-btn {
+        margin: 5px;
+    }
+    .text-inside {
+        position: absolute;
+        left: 5px;
+        width: 100%;
+    }
+
+    @media (max-width: 800px) {
+        .btn-sec {
+            margin-right: 1rem !important;
+        }
+    }
+    @media (max-width: 600px) {
+        .btn-sec {
+            margin-right: 1rem !important;
+        }
+    }
+}

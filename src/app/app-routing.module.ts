@@ -1,3 +1,5 @@
+import { HomeComponent } from './components/template/home/home.component';
+import { UsersComponent } from './components/users/users.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/utils/guards/auth.guard';
@@ -9,11 +11,14 @@ import { EditUserDialogComponent } from './components/users/dialogs/edit-user-di
 import { ProfileDialogComponent } from './components/users/dialogs/profile-dialog/profile-dialog/profile-dialog.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dashboard', component: LayoutComponent, canActivate: [AuthGuard] },
-  { path: 'users/add', component: EditUserDialogComponent, canActivate: [AuthGuard, ElevationGuard] },
-  { path: 'users/edit/:id', component: EditUserDialogComponent, canActivate: [AuthGuard, ElevationGuard] },
-  { path: 'users/profile', component: ProfileDialogComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: LayoutComponent, canActivate: [AuthGuard], children: [
+    { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+    { path: 'users/add', component: EditUserDialogComponent, canActivate: [AuthGuard, ElevationGuard] },
+    { path: 'users/edit/:id', component: EditUserDialogComponent, canActivate: [AuthGuard, ElevationGuard] },
+    { path: 'users/profile', component: ProfileDialogComponent, canActivate: [AuthGuard] }
+  ] }
 ];
 
 @NgModule({

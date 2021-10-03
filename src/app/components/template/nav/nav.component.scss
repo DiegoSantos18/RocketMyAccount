@@ -5,7 +5,7 @@
 }
 
 .sidenav a {
-    color: white;
+    color: $white;
 }
 
 mat-icon {
@@ -14,7 +14,6 @@ mat-icon {
 
 .content {
     padding: 16px;
-    // position: absolute;
     z-index: -1;
     top: 0;
     bottom: 0;
@@ -49,4 +48,11 @@ mat-icon {
     text-align: center;
     position: relative;
     right: 5%;
+}
+
+@media (max-width: 480px){
+	.content {
+        width: 100%;
+        height: 70vh;
+    }
 }

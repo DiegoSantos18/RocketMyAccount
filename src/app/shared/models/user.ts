@@ -1,11 +1,11 @@
-export interface User{
-    id: number;
-    name: string;
-    lastName: string;
-    role: Role;
-    email: string;
-    password: string;
-    token: string;
+export class User{
+    id?: number;
+    name?: string;
+    lastName?: string;
+    role?: Role;
+    email?: string;
+    password?: string;
+    token?: string;
 }
 
 export interface UserLogin {
@@ -13,7 +13,7 @@ export interface UserLogin {
     password: string;
 }
 
-export interface AuthorizationUser {
+export interface AuthUser {
     id: number;
     name: string;
     lastName: string;

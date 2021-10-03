@@ -1,15 +1,15 @@
-<mat-toolbar color="primary" ><img src="./../../../assets/img/RocketMyAccountLogo.png" style="height: 50%;"></mat-toolbar>
+<mat-toolbar class="mat-toolbar-login"><img src="./../../../assets/img/RocketMyAccountLogo.png"></mat-toolbar>
 
 <div class="card-container">
     <mat-card  class="card-content">    
-        <form  class="form-elements" [formGroup]="loginForm" (ngSubmit)="login()">
+        <form  class="form-elements" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             
             <mat-icon class="user-icon">account_circle</mat-icon>
             
-            <h3 style="margin-top: 20%;">LOGIN</h3>
+            <h3 style="padding: 4%; margin: 4%;">LOGIN</h3>
 
-            <div class="form-group" style="width: 100%;">
-                <mat-form-field class="form-row" appearance="outline" style="width: 100%;">
+            <div class="form-group">
+                <mat-form-field class="form-row" appearance="outline">
                     <input matTooltip="Seu email" matInput placeholder="usuário" required
                         id="username" name="username" formControlName="username"
                         class="form-control" [ngClass]="{ 'is-invalid': submitted && field.username.errors }" >
@@ -19,8 +19,8 @@
                 </div>
             </div>
 
-            <div class="form-group" style="width: 100%;">
-                <mat-form-field class="form-row" appearance="outline" style="width: 100%;">
+            <div class="form-group">
+                <mat-form-field class="form-row" appearance="outline">
                     <input matTooltip="Sua senha" matInput placeholder="senha" required
                         id="password" name="gpassword" [type]="hidePwd ? 'password' : 'text'"
                         formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && field.password.errors }">
@@ -34,13 +34,12 @@
             </div>
 
             <div class="form-group">
-                <button mat-raised-button color="primary" mat-raised-button style="border-radius:15px;max-height:6vh;" [disabled]="loading">
+                <button mat-raised-button color="primary" mat-raised-button style="border-radius:15px;max-height:6vh; left: 35%;" [disabled]="loading">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Login
                 </button>
             </div>
 
-            <!-- Footer -->
             <div class="footer">
                 <p>
                     <img src="./../../../assets/img/GitHub.png"><a style="color: white;" href="https://github.com/DiegoSantos18/AppolusProject" target="_blank">By - Diego Santos</a>

@@ -1,7 +1,7 @@
 import { AuthService } from './../../../../shared/services/auth-service/auth.service';
 import { NotificationService } from './../../../../shared/services/notification-service/notification.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { Role, User, AuthorizationUser } from './../../../../shared/models/user';
+import { Role, User, AuthUser } from './../../../../shared/models/user';
 import { ApiService } from './../../../../shared/services/api-service/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -21,8 +21,7 @@ interface SelectRole {
 export class EditUserDialogComponent implements OnInit {
   public isNew: boolean;
   public loggedUserIsAdmin: boolean = false;
-  public loggedUser!: AuthorizationUser;
-  public isPerfil: boolean = false;
+  public loggedUser!: AuthUser;
   public user!: User;
   @ViewChild("form", { static: true })
   private form!: NgForm;
@@ -32,7 +31,7 @@ export class EditUserDialogComponent implements OnInit {
 
   roles: SelectRole[] = [
     { value: Role.ADMIN, name: 'Admin', disabled: true },
-    { value: Role.USER, name: 'Usuário', disabled: false }
+    { value: Role.USER, name: 'Comum', disabled: false }
   ];
 
   constructor(
@@ -47,7 +46,6 @@ export class EditUserDialogComponent implements OnInit {
     this.loggedUser = this.authService.loggedUser;
 
     if (data) {
-      this.isPerfil = data["isPerfil"];
       this.user = data["user"];
     }
 
@@ -55,6 +53,7 @@ export class EditUserDialogComponent implements OnInit {
       this.isNew = false;
     } else {
       this.isNew = true;
+      this.user = new User();
     }
   }
 
@@ -64,47 +63,34 @@ export class EditUserDialogComponent implements OnInit {
       id: new FormControl({ value: (this.user ? this.user.id : null)}),
       name: new FormControl({ value: (this.user ? this.user.name : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
       lastName: new FormControl({ value: (this.user ? this.user.lastName : null), disabled: !this.canEditField() }, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]),
-      role: new FormControl({ value: (this.user ? this.user.role : null), disabled: !this.canEditRole() }, [Validators.required]),
+      role: new FormControl({ value: (this.user ? this.user.role : null), disabled: !this.canEditField(true) }, [Validators.required]),
       email: new FormControl({ value: (this.user ? this.user.email : null), disabled: !this.canEditField() }, [Validators.required, Validators.email]),
-      password: new FormControl({ value: (this.user ? this.user.password : null), disabled: !this.canEditField(true) }, [Validators.required]),
+      password: new FormControl({ value: (this.user ? this.user.password : null), disabled: !this.canEditField() }, [Validators.required]),
       token: new FormControl({ value: (this.user ? this.user.token : null)})
     });
     this.breakpoint = window.innerWidth <= 600 ? 1 : 2; // Breakpoint observer code
     //#endregion
   }
 
-  // loadUserPerfil(): User {
-  //   this.apiService.getUserById(this.loggedUser.id).subscribe(u => {return u;});
-  // }
-
-  canEditField(isPassword: boolean = false): boolean{
-    //Admin, perfil com senha, e novo usuário não perfil libera campo edição
-    if(this.loggedUserIsAdmin || 
-      (this.isPerfil && isPassword) ||
-      (!this.isPerfil && this.isNew)){
-      return true;
-    }
-
-    return false;
+  loadFormGroup(){
+    
   }
 
-  canEditRole(): boolean{
-    /*Somente o admin edita usuários
-    * Por consequencia não permite editar um mesmo usuário == usuário logado
-    * Admin não pode mudar papel como ele vai editar usuários depois?? fica fixo admin
-    */
-    if(this.loggedUserIsAdmin && this.loggedUser?.id != this.user?.id){
-      return true;
+  canEditField(isRole: boolean = false): boolean{
+    /*Só admin edita usuários 
+    * No caso do admin editar ele mesmo não pode mudar o campo papel, senão ee pede os acessos*/
+    if(!this.loggedUserIsAdmin || (isRole && this.user.role == Role.ADMIN)){
+      return false;
     }
 
-    return false;
+    return true;
   }
 
   cancel() {
     this.dialogRef.close();
   }
 
-  saveUser() {
+  async saveUser() {
     if (this.form.invalid) {
       this.alertService.alert("Preencha o formulários corretamente!");
       return;
@@ -123,8 +109,8 @@ export class EditUserDialogComponent implements OnInit {
     //Editar usuário
     else {
       request = this.apiService.putUser(this.user);
-      successMessage = "Usuário criado com sucesso!";
-      errorMessage = "Houve um erro ao criar o usuário: ";
+      successMessage = "Usuário editado com sucesso!";
+      errorMessage = "Houve um erro ao editar o usuário: ";
     }
 
     request
@@ -132,7 +118,7 @@ export class EditUserDialogComponent implements OnInit {
         if (id && this.isNew) {
           this.user.id = id;
         }
-        this.dialogRef.close();
+        this.dialogRef.close(true);
         this.alertService.success(successMessage);
       },
       error => {

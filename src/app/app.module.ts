@@ -1,3 +1,4 @@
+import { UsersComponent } from './components/users/users.component';
 import { EditUserDialogComponent } from './components/users/dialogs/edit-user-dialog/edit-user-dialog.component';
 import { LayoutComponent } from './components/template/layout/layout.component';
 import { LoginComponent } from './components/login/login.component';
@@ -31,7 +32,8 @@ import { ProfileDialogComponent } from './components/users/dialogs/profile-dialo
     ProfileDialogComponent,
     LoginComponent,
     LayoutComponent,
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { ProfileDialogComponent } from './components/users/dialogs/profile-dialo
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgmaterialModule
   ],
   exports: [
     NgmaterialModule

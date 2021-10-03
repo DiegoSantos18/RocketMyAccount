@@ -1,27 +1,28 @@
-# RocketMyAccount
+# Rocket My Account
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.7.
+Projeto desenvolvido em Angular [Angular CLI](https://github.com/angular/angular-cli) version 12.2.7.
 
-## Development server
+## Pacotes Node JS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Clone este projeto em sua máquina e na pasta raíz do projeto, instale os pacotes do Node Modules
 
-## Code scaffolding
+npm install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Servidor Json Server
 
-## Build
+Build Json Server: acesse a pasta backend e rode o script Start -> `json-server --watch db.json --port 3000`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Rodar front aplicação
 
-## Running unit tests
+Build front: acesse a pasta do projeto e rode o script Start -> `ng serve`. Navegue para `http://localhost:4200/` em seu navegador. O aplicativo irá iniciar automaticamente.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Um usuário Admin já estará cadastrado:
 
-## Running end-to-end tests
+Usuário: admin@admin.com
+Senha: 12345
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Para visualizar seu usuário autenticado, abra as opções de desenvolvedor Ctrl + Shft + J e vá na aba Application. Lá estará salvo sua autenticação.
+Os usuários em questão ficaram salvos na nossa fake API no Json Server em `http://localhost:3000/users`. Pode ser utilizado com o Postman também.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+

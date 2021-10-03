@@ -1,10 +1,11 @@
+import { ProfileDialogComponent } from './../../users/dialogs/profile-dialog/profile-dialog/profile-dialog.component';
 import { AuthService } from './../../../shared/services/auth-service/auth.service';
 import { NavService } from './nav.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from '../../users/dialogs/edit-user-dialog/edit-user-dialog.component';
-import { AuthorizationUser } from './../../../shared/models/user';
+import { AuthUser } from './../../../shared/models/user';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +15,7 @@ import { AuthorizationUser } from './../../../shared/models/user';
 export class NavComponent implements OnInit {
   @ViewChild('sidenav' , {static: true})
   public sidenav!: MatSidenav;
-  public userLogged!: AuthorizationUser;
+  public userLogged!: AuthUser;
 
   constructor(
     private dialogRef: MatDialog,
@@ -42,10 +43,10 @@ export class NavComponent implements OnInit {
 
   openPerfilDialog() {
     this.sidenavToggle();//Toggle menu
-    this.dialogRef.open(EditUserDialogComponent, {
+    this.dialogRef.open(ProfileDialogComponent, {
       height: '400px',
       width: '600px',
-      data: { isPerfil: true, user: undefined }
+      data: { }
     }).afterClosed().subscribe(x => {
       this.sidenavToggle();//Quando eu fecho modal me abre menu novamente Toggle
     });

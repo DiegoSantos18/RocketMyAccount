@@ -22,6 +22,11 @@ export class ApiService {
     return this.http.put<User>(`${environment.apiUrl}${ApiEntityType.Users}/${user.id}`, user);
   }
 
+  //Deletar usuário
+  deleteUser(id: number): Observable<User> {
+    return this.http.delete<User>(`${environment.apiUrl}${ApiEntityType.Users}/${id}`);
+  }
+
   //Get todos usuários
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}${ApiEntityType.Users}`);
@@ -34,6 +39,6 @@ export class ApiService {
 
    //Get Logged User
    getLoggedUserByAuthentication(email: string, password: string): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}${ApiEntityType.Users}?email=${email}&password=${password}&_limit=1`);
+    return this.http.get<User>(`${environment.apiUrl}${ApiEntityType.Users}?email=${email}&password=${password}`);
   }
 }

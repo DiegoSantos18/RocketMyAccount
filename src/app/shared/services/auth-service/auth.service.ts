@@ -1,7 +1,7 @@
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Role, User } from './../../models/user';
+import { Role, User, AuthUser } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,67 +11,46 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  public user: Observable<User>;
-  private userSubject: BehaviorSubject<User>;
+  public user: Observable<AuthUser>;
+  private userSubject: BehaviorSubject<AuthUser>;
   
   constructor(private router: Router, private http: HttpClient) 
   { 
     
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('dbUser') || '{}'));
+    this.userSubject = new BehaviorSubject<AuthUser>(JSON.parse(localStorage.getItem('authUser') || '{}'));
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): User {
+  public get loggedUser(): AuthUser {
     return this.userSubject.value;
   }
 
-  public set nextUserSubject(user: any) {
+  public set loggedUser(user: any) {
     this.userSubject.next(user);
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>(`${environment.apiUrl}users/authenticate`, { email, password })
-    .pipe(map(user => {
+    return this.http.post<AuthUser>(`${environment.apiUrl}user/authenticate`, { email, password })
+    .pipe(map(authUser => {
       //Guarda detalhes do usuário jwt token em local storage para o usuário logado e reload das páginas depois
-      localStorage.setItem('dbUser', JSON.stringify(user));
-      this.userSubject.next(user);
-      return user;
+      localStorage.setItem('authUser', JSON.stringify(authUser));
+      //Remove o usuário carregado não precisamos mais dele
+      localStorage.removeItem('dbUser');
+      this.loggedUser = authUser;
+      return authUser;
     }));
   }
 
   logout() {
     //Remove o usuário logado do local storage e redireciona pra login
     localStorage.removeItem('dbUser');
-    this.userSubject.next(new User());
-    this.router.navigate(['/auth/login']);
+    localStorage.removeItem('authUser');
+    this.loggedUser = null;
+    this.router.navigate(['/login']);
   }
 
-  getLoggedUser(): User{
-    const loggedUser = new User();
-    let request = this.http.get<User>(`${environment.apiUrl}users/loggedUser`);
-
-    if(request){
-      request.subscribe((user) => {
-        if(user){
-          loggedUser.id = user.id;
-          loggedUser.name = user.name,
-          loggedUser.lastName = user.lastName;
-          loggedUser.role = user.role;
-          loggedUser.email = user.email;
-          loggedUser.password = user.password;
-          loggedUser.token = user.token;
-        }
-      }).unsubscribe();
-    }
-    else{
-      this.logout();
-    }
-    
-    return loggedUser;
-  }
-
-  isAdmin(): boolean {
-    const userLogged = this.getLoggedUser();
+  public get isAdmin(): boolean {
+    const userLogged = this.loggedUser;
     if(userLogged){
       return userLogged.role == Role.ADMIN;
     }

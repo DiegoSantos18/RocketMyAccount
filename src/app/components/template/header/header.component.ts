@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { HeaderService } from './header.service';
 import { NavService } from './../nav/nav.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,20 +8,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  _route!: Router;
 
-  constructor(private sidenavService: NavService, public router: Router) {
-    this._route = router;
-  }
+  constructor(private sidenavService: NavService, private headerService: HeaderService) {}
 
-   ngOnInit() {
-    console.log(this._route);
-   }
+   ngOnInit() {}
 
   btnOpenedMenuClick(event: any){
     if(event){
       this.sidenavService.toggle();
     }
+  }
+
+  get title(): string{
+    return this.headerService.headerData.title;
+  }
+
+  get icon(): string{
+    return this.headerService.headerData.icon;
+  }
+
+  get routeUrl(): string{
+    return this.headerService.headerData.routeUrl;
   }
 
 }

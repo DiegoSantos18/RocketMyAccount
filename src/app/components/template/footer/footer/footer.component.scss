@@ -1,4 +1,7 @@
+@import './../../../../../assets/scss/colors.scss';
+
 .footer, span {
+    background-color: $purple2;
     display: flex;
     position: fixed;
     align-items: center;

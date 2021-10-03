@@ -1,0 +1,12 @@
+15 minutos => Criar projeto base no angular
+15 minutos => importação de bibliotecas do angular material e afins utilizadas neste projeto
+45 minutos => Configurando base do Json Server
+45 minutos => Gerando todos componentes com o Angular Cli
+45 minutos => Configurando Rotas e afins (roteamento dos componentes criados)
+60 minutos (apróx.) -> Estilizando páginas e componentes do material (Só pq eu sou bem detalhista hehehe :D)
+50 minutos => Criando o service da API
+50 minutos => Criando e configurando um "Fake backend" simulando uma autenticação com JWT Token e Interceptors (OBS: É só uma exemplificação)
+45 minutos => Configurando LocalStorage
+240 minutos => Ajustes finais CRUD e perfil
+******************************************************************
+Total = 10 horas de trabalho aproximadamente

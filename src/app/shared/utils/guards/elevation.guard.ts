@@ -10,7 +10,7 @@ export class ElevationGuard implements CanActivate {
   constructor(private authService: AuthService){}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    const loggedUserAuthorized = this.authService.loggedUserHasAuthorized;
+    const loggedUserAuthorized = this.authService.loggedUser;
 
     //Se Admin autorizado
     if(loggedUserAuthorized && this.authService.isAdmin){
